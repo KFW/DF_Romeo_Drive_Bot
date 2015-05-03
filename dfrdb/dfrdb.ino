@@ -23,19 +23,15 @@ https://beyondszine.wordpress.com/2013/10/31/part-ii-all-pin-interrupt-method-fo
 
 */
 
-/***************************
-To do:
-clean up variable names
 
-
-***************************/
 #include <Servo.h>
 
 Servo wrist;
 Servo claw;
 
 const int WristInterrupt = 3; // interrupt 0 is on pin 3 for wrist (throttle on receiver)
-const int ClawInterrupt = 2; // interrupt 1 is on pin 2 for claw (rudder on receiver)
+const int ClawInterrupt = 2; 
+// interrupt 1 is on pin 2 for claw (rudder on receiver)
 const int WristPin = 12;
 const int ClawPin = 13;
 
@@ -50,12 +46,12 @@ unsigned long clawPulse = 0;
 int clawAngle = 85;
 int clawMinDeadspaceLimit = 1400; // threshold for closing claw; want dead zone in center
 int clawMaxDeadspaceLimit = 1600; // threshold for opening claw
-const int minClawAngle = 35; // limit travel to protect servo
+const int minClawAngle = 35;      // limit travel to protect servo
 const int maxClawAngle = 135;
 
 void setup() {
   attachInterrupt(0, readWristInterrupt, CHANGE);  // pin 3 on Romeo  __ signal for wrist
-  attachInterrupt(1, readClawInterrupt, CHANGE);  // pin 2            __ signal for claw
+  attachInterrupt(1, readClawInterrupt, CHANGE);   // pin 2            __ signal for claw
   wrist.attach(WristPin);
   claw.attach(ClawPin);
   wrist.write(90); // starting position
@@ -73,7 +69,8 @@ void loop() {
     
     wrist.writeMicroseconds(wristPulse);
     
-    // for claw want to open/close base on stick, but then hold position
+    // for claw want to open/close base on stick, but then hold position; so increment/decrement depending on position
+    // and then keep that value if joystick centered
     if (clawPulse < clawMinDeadspaceLimit){
       clawAngle -= 1; 
     }
