@@ -135,7 +135,7 @@ void readWristInterruptPin() {
   }
 } // end readWristInterruptPin()
 
-void readClawInterruptPin()        // works just like wrist interrupt
+void readClawInterruptPin(){        // works just like wrist interrupt
   if(digitalRead(ClawInterruptPin) == HIGH){
     clawTimer = micros(); 
   }
