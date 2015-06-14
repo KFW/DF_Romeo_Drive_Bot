@@ -39,6 +39,9 @@ Will assume full range of signal (1000 - 2000), simplifies programming
 Extreme values outside range only occur with extremes of trim, which 
 should be a rare outlier - will avoid the overhead of a constrain() operation
 
+motor currently being controlled by seperate motor controller
+could bring this function in but need more testing since failed wiht extremes of backing up.
+
 
 ******************************************************************************/
 
@@ -67,11 +70,14 @@ volatile boolean clawFlag = false;
 unsigned long wristPulse = 0;
 unsigned long clawPulse = 0;
 
-int clawAngle = 85;
-int ClawRDZ = 1450; // threshold for closing claw - right limit of dead zone
-int ClawLDZ = 1550; // threshold for opening claw
+int clawAngle = 85;       // init position
+const int ClawRDZ = 1450; // threshold for closing claw - right limit of dead zone
+const int ClawLDZ = 1550; // threshold for opening claw
 const int minClawAngle = 5;      // limit travel to protect servo
 const int maxClawAngle = 135;
+int wristAngle = 85;
+const int minWristAngle = 0;
+const int maxWristAngle = 150; 
 
 /********************
 ====== BODY =========
@@ -96,8 +102,9 @@ void loop() {
     interrupts();   // there is a safer way to do this by saving and restoring 
                     // settings register, but since I'm not using extensive 
                     // libraries should be OK
-    
-    wrist.writeMicroseconds(wristPulse);
+    wristAngle = map(wristPulse, 1000, 2000, minWristAngle, maxWristAngle);
+    wristAngle = constrain(wristAngle, maxWristAngle, minWristAngle); // want to lower when joystick forward, so map in reverse
+    wrist.write(wristAngle);
   }
   if (clawFlag){ 
     noInterrupts(); 
