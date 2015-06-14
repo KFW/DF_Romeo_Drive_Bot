@@ -73,11 +73,11 @@ unsigned long clawPulse = 0;
 int clawAngle = 85;       // init position
 const int ClawRDZ = 1450; // threshold for closing claw - right limit of dead zone
 const int ClawLDZ = 1550; // threshold for opening claw
-const int minClawAngle = 5;      // limit travel to protect servo
-const int maxClawAngle = 135;
+const int minClawAngle = 30;  // open claw; limit angles to protect servo
+const int maxClawAngle = 147; // closed claw
 int wristAngle = 85;
-const int minWristAngle = 0;
-const int maxWristAngle = 150; 
+const int minWristAngle = 10;
+const int maxWristAngle = 135; 
 
 /********************
 ====== BODY =========
