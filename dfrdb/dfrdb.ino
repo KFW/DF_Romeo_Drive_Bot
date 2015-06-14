@@ -102,8 +102,8 @@ void loop() {
     interrupts();   // there is a safer way to do this by saving and restoring 
                     // settings register, but since I'm not using extensive 
                     // libraries should be OK
-    wristAngle = map(wristPulse, 1000, 2000, minWristAngle, maxWristAngle);
-    wristAngle = constrain(wristAngle, minWristAngle, maxWristAngle); // want to lower when joystick forward, so map in reverse
+    wristAngle = map(wristPulse, 1000, 2000, maxWristAngle, minWristAngle);  // want to lower when joystick forward, so map in reverse
+    wristAngle = constrain(wristAngle, minWristAngle, maxWristAngle); 
     wrist.write(wristAngle);
   }
   if (clawFlag){ 
