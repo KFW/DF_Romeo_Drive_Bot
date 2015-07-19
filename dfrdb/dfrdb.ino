@@ -114,11 +114,12 @@ void loop() {
     // for claw want to open/close base on stick, but then hold position; 
     // so increment/decrement depending on position
     // and then keep that value if joystick centered
+    // now set so that moving stick R closes (righty tighty lefty loosey)
     if (clawPulse < ClawRDZ){
-      clawAngle -= 1; 
+      clawAngle += 1; 
     }
     else if (clawPulse > ClawLDZ){
-      clawAngle +=1;
+      clawAngle -=1;
     }
     clawAngle = constrain(clawAngle, minClawAngle, maxClawAngle);
     claw.write(clawAngle);
