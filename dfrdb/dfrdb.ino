@@ -5,11 +5,11 @@ Robot for MakerFaire Kansas City Arch Reactor booth
 drives just the claw - user Sabertooth for motor shield
 
 Pin connections:
-AIL:  (hold pin 0 for this use)
-ELE:  (hold pin 1 for this use)
+AIL: 
+ELE:  
 THR: 3
 RUD: 2
-power receiver off A5 since digital pins at 7.2V for servos
+
 
 Read RC signal pulse width by using interrupt then control servos of
 SparkFun robot arm (https://www.sparkfun.com/products/11524 and 
