@@ -76,8 +76,8 @@ const int ClawLDZ = 1550; // threshold for opening claw
 const int minClawAngle = 30;  // open claw; limit angles to protect servo
 const int maxClawAngle = 147; // closed claw
 int wristAngle = 85;
-const int minWristAngle = 10;
-const int maxWristAngle = 135; 
+const int minWristAngle = 25;
+const int maxWristAngle = 125; 
 
 /********************
 ====== BODY =========
