@@ -5,8 +5,8 @@ Robot for MakerFaire Kansas City Arch Reactor booth
 drives just the claw - user Sabertooth for motor shield
 
 Pin connections:
-AIL: 
-ELE:  
+AIL: roboclaw 2
+ELE: roboclaw 1
 THR: 3
 RUD: 2
 
