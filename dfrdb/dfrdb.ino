@@ -1,3 +1,9 @@
+/******
+claw opens when driving - not supposed to
+for testing add some print statements
+put Trackbot on test stand and capture serial output on laptop
+*/
+
 /******************************************************************************
 dfrdb
 DFRobot Romeo Drive Bot
