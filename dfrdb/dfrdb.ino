@@ -5,10 +5,10 @@ Robot for MakerFaire Kansas City Arch Reactor booth
 drives just the claw - user Sabertooth for motor shield
 
 Pin connections:
-AIL: roboclaw 2
+AIL: roboclaw (motor controller) 2
 ELE: roboclaw 1
-THR: 3
-RUD: 2
+THR: Romeo 3
+RUD: Romeo 2
 
 
 Read RC signal pulse width by using interrupt then control servos of
@@ -90,10 +90,13 @@ void setup() {
   claw.attach(ClawPin);
   wrist.write(90); // starting position
   wrist.write(clawAngle);
+
+  Serial.begin(9600); // for debugging
 } // end setup()
 
 void loop() {
   // use flag to see if there is actually a new signal
+  // wrist seems to handle interference pretty well; presumably since most signals from RC receiver and not noise
   if (wristFlag){
     noInterrupts(); // pause interrupts so pw signals are read faithfully 
                     // and not changed part way during assignment
@@ -115,6 +118,8 @@ void loop() {
     // so increment/decrement depending on position
     // and then keep that value if joystick centered
     // now set so that moving stick R closes (righty tighty lefty loosey)
+    // note that motor noise causes claw to open when driving. Ferrite beads helped but didn't eliminate
+    Serial.println(clawPulse) // so we can see what kind of RC interference we're getting
     if (clawPulse < ClawRDZ){
       clawAngle += 1; 
     }
