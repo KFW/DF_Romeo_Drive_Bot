@@ -48,6 +48,7 @@ verified RF noise - since new robot has 4 motors
 ferrite beads helped but didn't eliminate
 serial print showed anomalous very large "signals"
 so we'll just ignore those
+tested - it works!
 
 ******************************************************************************/
 
@@ -132,7 +133,7 @@ void loop() {
     if (clawPulse < ClawRDZ){
       clawAngle += 1; 
     }
-    else if (clawpulse > SignalLimit){
+    else if (clawPulse > SignalLimit){
       // do nothing - ignore value
     }
     else if (clawPulse > ClawLDZ){
