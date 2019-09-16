@@ -1,9 +1,3 @@
-/******
-claw opens when driving - not supposed to
-for testing add some print statements
-put Trackbot on test stand and capture serial output on laptop
-*/
-
 /******************************************************************************
 dfrdb
 DFRobot Romeo Drive Bot
@@ -49,6 +43,12 @@ motor currently being controlled by seperate motor controller
 could bring this function in but need more testing since failed wiht extremes of backing up.
 
 
+claw was opening when driving - not supposed to
+verified RF noise - since new robot has 4 motors
+ferrite beads helped but didn't eliminate
+serial print showed anomalous very large "signals"
+so we'll just ignore those
+
 ******************************************************************************/
 
 /********************
@@ -76,9 +76,10 @@ volatile boolean clawFlag = false;
 unsigned long wristPulse = 0;
 unsigned long clawPulse = 0;
 
-int clawAngle = 85;       // init position
-const int ClawRDZ = 1450; // threshold for closing claw - right limit of dead zone
-const int ClawLDZ = 1550; // threshold for opening claw
+int clawAngle = 85;           // init position
+const int ClawRDZ = 1450;     // threshold for closing claw - right limit of dead zone
+const int ClawLDZ = 1550;     // threshold for opening claw
+const int SignalLimit = 1920; // limit for filtering out RF noise; largest pulse seen on testing was 1916  
 const int minClawAngle = 30;  // open claw; limit angles to protect servo
 const int maxClawAngle = 147; // closed claw
 int wristAngle = 85;
@@ -97,7 +98,7 @@ void setup() {
   wrist.write(90); // starting position
   wrist.write(clawAngle);
 
-  Serial.begin(9600); // for debugging
+  // Serial.begin(9600); // for debugging
 } // end setup()
 
 void loop() {
@@ -124,10 +125,15 @@ void loop() {
     // so increment/decrement depending on position
     // and then keep that value if joystick centered
     // now set so that moving stick R closes (righty tighty lefty loosey)
+
     // note that motor noise causes claw to open when driving. Ferrite beads helped but didn't eliminate
-    Serial.println(clawPulse) // so we can see what kind of RC interference we're getting
+    // Serial.println(clawPulse); // so we can see what kind of RC interference we're getting
+    
     if (clawPulse < ClawRDZ){
       clawAngle += 1; 
+    }
+    else if (clawpulse > SignalLimit){
+      // do nothing - ignore value
     }
     else if (clawPulse > ClawLDZ){
       clawAngle -=1;
